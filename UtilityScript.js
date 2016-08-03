@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+//3/8/2016 version 0.2
+
 public static class Utility
 {	
 	function HasChildWithTag(parent:GameObject, tag:String)
@@ -31,7 +33,7 @@ public static class Utility
 		}
 	}
 
-	function IsNearToObjectWithTag(obj:GameObject, tag:String, extraDetectRadius:int)
+	function IsNearToObjectWithTag(obj:GameObject, tag:String, extraDetectRadius:float)
 	{
 		if(obj!= null && tag!=null)
 		{
@@ -39,8 +41,7 @@ public static class Utility
 
 			var objs:GameObject[];
 			objs = GameObject.FindGameObjectsWithTag(tag);
-
-			extraDetectRadius = 2.5;
+			
 
 			for(var i = 0;i<objs.length; i++)
 			{
@@ -62,31 +63,24 @@ public static class Utility
 
 	function FindNearestObjectWithTag(tag:String, object:GameObject)
 	{
-		//Array storing all the objects with the tag we want
-		var objectsWithTag:GameObject[];
-		objectsWithTag = GameObject.FindGameObjectsWithTag(tag);
+		var objs:GameObject[];
+		objs = GameObject.FindGameObjectsWithTag(tag);
 
-		//The closest object
-		var closestObject:GameObject = null;
+		var closest:int = 100000;
+		var closestObject:GameObject;
 
-		var closestObjectIndex:int = 66666;
+		var i:int;
+		var dist:float;
 
-		var closestDistance:float;
-
-		for(var i = 0;i<objectsWithTag.length; i++)
+		for(i = 0;i<objs.length; i++)
 		{
-			var distance = Utility.FindDist(objectsWithTag[i], object);
-			if(distance < (closestDistance))
+			dist = Utility.FindDist(objs[i], object);
+			if(dist < (2.5))
 			{
-				closestDistance = distance;
-				closestObjectIndex = i;
+				closestObject = objs[i];
 			}
 		}
-		//In short, another way to check if a object was actually found.
-		if(closestObjectIndex <= objectsWithTag.length)
-		{
-			closestObject = objectsWithTag[closestObjectIndex];
-		}
+		     
 		return closestObject;
 
 	}
